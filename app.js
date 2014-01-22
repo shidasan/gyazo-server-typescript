@@ -47,7 +47,10 @@ app.get(/([0-9a-f]+)/, function (req, res) {
             console.log(err);
             res.send(400);
         }
-        var params = { ImageSource: 'http://' + CONFIG.Host + '/' + fileid + CONFIG.FileType };
+        var params = {
+            ImageSource: 'http://' + CONFIG.Host + '/' + fileid + CONFIG.FileType,
+            Domain: CONFIG.Host
+        };
         res.render('index', params);
     });
 });

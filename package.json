@@ -1,0 +1,11 @@
+{
+	"name": "Gyazo-Server",
+	"scripts": {
+		"start": "node app"
+	},
+	"dependencies": {
+		"express": "*",
+		"config":  "*",
+		"js-yaml": "*"
+	}
+}

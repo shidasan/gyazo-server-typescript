@@ -1,6 +1,9 @@
 # Gyazo Server
 
 Gyazo Server written on TypeScript
+
+* Twitter Cards Support
+
 ## Usage
 
 ```bash

@@ -11,6 +11,8 @@ var CONFIG = require('config');
 var app = express();
 app.configure(function () {
     app.set('port', process.env.PORT || 3000);
+    app.set('views', __dirname + '/views');
+    app.set('view engine', 'jade');
     app.use(express.static(path.join(__dirname, CONFIG.Files)));
     app.use(express.bodyParser({ uploadDir: CONFIG.Files }));
 });
@@ -29,11 +31,29 @@ app.post('/upload', function (req, res) {
         var targetpath = CONFIG.Files + digest + '.png';
         fs.rename(sourcepath, targetpath, function (err) {
             if (err) {
-                throw err;
+                console.log(err);
+                res.send(400);
             }
-            res.send('http://' + CONFIG.Host + '/' + path.basename(targetpath));
+            res.send('http://' + CONFIG.Host + '/' + path.basename(CONFIG.Files + digest));
         });
     });
+});
+
+app.get(/([0-9a-f]+)/, function (req, res) {
+    var fileid = req.params[0];
+    var filepath = CONFIG.Files + fileid + CONFIG.FileType;
+    fs.stat(filepath, function (err, stats) {
+        if (err) {
+            console.log(err);
+            res.send(400);
+        }
+        var params = { ImageSource: 'http://' + CONFIG.Host + '/' + fileid + CONFIG.FileType };
+        res.render('index', params);
+    });
+});
+
+app.get('/', function (req, res) {
+    res.send('This site serves as Gyazo. (More detail at gyazo.com)');
 });
 
 if (!module.parent) {

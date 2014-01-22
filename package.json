@@ -6,6 +6,7 @@
 	"dependencies": {
 		"express": "*",
 		"config":  "*",
-		"js-yaml": "*"
+		"js-yaml": "*",
+		"jade":    "*"
 	}
 }
